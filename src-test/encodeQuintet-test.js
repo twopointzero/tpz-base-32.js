@@ -13,6 +13,22 @@ EncodeQuintetTest = TestCase("encodeQuintet test", {
         );
     },
     
+    testGivenAnyLegalValueShouldNotThrow: function () {
+        var i;
+        for (i = 0; i < 31; i++) {
+            tpzBase32.encodeQuintet(i);
+        }
+    },
+
+    testGivenAnyLegalValueShouldProduceTheExpectedResult: function () {
+        var values = "ybndrfg8ejkmcpqxot1uwisza345h769";
+        var i;
+        for (i = 0; i < values.Length; i++) {
+            var expected = values.charAt(i);
+            AssertEquals(expected, tpzBase32.encodeQuintet(i));
+        }
+    },
+
     testGiven_undefined_ShouldThrowArgumentOutOfRangeException: function () {
         this.encodeQuintetAndAssertArgumentOutOfRangeException(undefined);
     },
@@ -44,22 +60,6 @@ EncodeQuintetTest = TestCase("encodeQuintet test", {
         var i;
         for (i = 32; i < 255; i++) {
             this.encodeQuintetAndAssertArgumentOutOfRangeException(i);
-        }
-    },
-
-    testGivenAnyLegalValueShouldNotThrow: function () {
-        var i;
-        for (i = 0; i < 31; i++) {
-            tpzBase32.encodeQuintet(i);
-        }
-    },
-
-    testGivenAnyLegalValueShouldProduceTheExpectedResult: function () {
-        var values = "ybndrfg8ejkmcpqxot1uwisza345h769";
-        var i;
-        for (i = 0; i < values.Length; i++) {
-            var expected = values.charAt(i);
-            AssertEquals(expected, tpzBase32.encodeQuintet(i));
         }
     }
 });

@@ -5,6 +5,21 @@ Integer32ConverterDecodeTest = TestCase("Integer32Converter.decode test", {
         assertEquals(expected, actual);
     },
 
+    decodeAndAssertException: function (input, msg, error) {
+        var converter = new tpzBase32.Integer32Converter();
+        assertException(msg, function () {
+            converter.decode(input);
+        }, error);
+    },
+
+    decodeAndAssertArgumentOutOfRangeException: function(input) {
+        this.decodeAndAssertException(
+            input,
+            "Should throw argument out of range",
+            "argument out of range"
+        );
+    },
+    
     testGiven_0L2V_ShouldDecodeTo_646736: function () {
         this.decodeAndAssertEquals("0L2V", 646736);
     },
@@ -75,21 +90,6 @@ Integer32ConverterDecodeTest = TestCase("Integer32Converter.decode test", {
     
     testGiven_yyyyyyy_ZeroShouldDecodeTo_0: function () {
         this.decodeAndAssertEquals("yyyyyyy", 0);
-    },
-    
-    decodeAndAssertException: function (input, msg, error) {
-        var converter = new tpzBase32.Integer32Converter();
-        assertException(msg, function () {
-            converter.decode(input);
-        }, error);
-    },
-
-    decodeAndAssertArgumentOutOfRangeException: function(input) {
-        this.decodeAndAssertException(
-            input,
-            "Should throw argument out of range",
-            "argument out of range"
-        );
     },
     
     testGiven_undefined_ShouldThrow: function () {

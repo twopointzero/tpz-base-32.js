@@ -5,6 +5,21 @@
         assertEquals(expected, actual);
     },
 
+    encodeAndAssertException: function (input, msg, error) {
+        var converter = new tpzBase32.Integer32Converter();
+        assertException(msg, function () {
+            converter.encode(input);
+        }, error);
+    },
+
+    encodeAndAssertArgumentOutOfRangeException: function(input) {
+        this.encodeAndAssertException(
+            input,
+            "Should throw argument out of range",
+            "argument out of range"
+        );
+    },
+
     testGivenMaxValueShouldEncodeTo_999999b: function () {
         this.encodeAndAssertEquals(2147483647, "999999b");
     },
@@ -53,21 +68,6 @@
         this.encodeAndAssertEquals(853561428, "wnwyq3");
     },
 
-    encodeAndAssertException: function (input, msg, error) {
-        var converter = new tpzBase32.Integer32Converter();
-        assertException(msg, function () {
-            converter.encode(input);
-        }, error);
-    },
-
-    encodeAndAssertArgumentOutOfRangeException: function(input) {
-        this.encodeAndAssertException(
-            input,
-            "Should throw argument out of range",
-            "argument out of range"
-        );
-    },
-    
     testGiven_undefined_ShouldThrow: function () {
         this.encodeAndAssertArgumentOutOfRangeException(undefined);
     },
