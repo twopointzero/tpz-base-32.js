@@ -4,9 +4,9 @@
 };
 
 tpzBase32.encodeQuintet = function (quintet) {
-    // Add guard clauses and their tests!!! including a negative range check
-
-    if (quintet > 31) {
+    if (typeof quintet !== "number" || isNaN(quintet) ||
+        quintet < 0 || quintet > 31 ||
+        quintet % 1 !== 0) {
         throw {
             name: "argument out of range",
             message: "An integer between 0 and 31 inclusive is required."
