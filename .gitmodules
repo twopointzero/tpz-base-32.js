@@ -1,0 +1,3 @@
+[submodule "Packages/JsTestDriver"]
+	path = Packages/JsTestDriver
+	url = git://github.com/twopointzero/JsTestDriver.git
