@@ -76,9 +76,9 @@ tpzBase32.Integer32Converter.prototype.encode = function (input, includePadding)
 
     if (input === 0) {
         zero = tpzBase32.encodingAlphabet.charAt(0);
-        includePadding
+        return includePadding
             ? [zero, zero, zero, zero, zero, zero, zero].join("")
-            zero;
+            : zero;
     }
 
     var i;
