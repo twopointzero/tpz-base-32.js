@@ -45,7 +45,7 @@ Integer32ConverterDecodeTest = TestCase("Integer32Converter.decode test", {
             this.decodeAndAssertEquals("byyyyyy", 1);
         },
         
-        testGiven_y_ZeroShouldDecodeTo_0: function () {
+        testGiven_y_ShouldDecodeTo_0: function () {
             this.decodeAndAssertEquals("y", 0);
         },
 

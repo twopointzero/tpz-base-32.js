@@ -65,16 +65,23 @@ tpzBase32.Integer32Converter.prototype.encodeWithPadding = function (input) {
 };
 
 tpzBase32.Integer32Converter.prototype.encode = function (input, includePadding) {
-    // Add guard clauses and their tests!!!
-    
+    if (typeof input !== "number" || isNaN(input) ||
+        input < -2147483648 || input > 2147483647 ||
+        input % 1 !== 0) {
+        throw {
+            name: "argument out of range",
+            message: "The input argument must be a non-NaN 32 bit integer value."
+            };
+        }
+
     if (input === 0) {
-		var zero = tpzBase32.encodingAlphabet.charAt(0);
-		return includePadding
-			? [zero, zero, zero, zero, zero, zero, zero].join("")
-			: zero;
+        zero = tpzBase32.encodingAlphabet.charAt(0);
+        includePadding
+            ? [zero, zero, zero, zero, zero, zero, zero].join("")
+            zero;
     }
 
-	var i;
+    var i;
     var result = ["!", "!", "!", "!", "!", "!", "!"];
     for (i = 0; i < 7; i++) {
         var quintet = (input >>> (5 * i)) & tpzBase32.quintetMask;
