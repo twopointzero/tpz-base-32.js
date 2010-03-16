@@ -17,7 +17,13 @@ tpzBase32.encodeQuintet = function (quintet) {
 };
 
 tpzBase32.normalizeToTpzBase32Alphabet = function (encodedCharacter) {
-    // Add guard clauses and their tests!!!
+    if (typeof encodedCharacter !== "string" ||
+        encodedCharacter.length === 0 || encodedCharacter.length > 1) {
+        throw {
+            name: "argument out of range",
+            message: "The input argument must be a single character."
+        };
+    }
 
     if (encodedCharacter === "0") {
         return "o";
