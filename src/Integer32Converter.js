@@ -42,7 +42,13 @@ tpzBase32.normalizeToTpzBase32Alphabet = function (encodedCharacter) {
 };
 
 tpzBase32.decodeToQuintet = function (encodedCharacter) {
-    // Add guard clauses and their tests!!!
+    if (typeof encodedCharacter !== "string" ||
+        encodedCharacter.length === 0 || encodedCharacter.length > 1) {
+        throw {
+            name: "argument out of range",
+            message: "The input argument must be a single character."
+        };
+    }
 
     var normalizedEncodedCharacter = tpzBase32.normalizeToTpzBase32Alphabet(encodedCharacter);
     var index = tpzBase32.encodingAlphabet.indexOf(normalizedEncodedCharacter);
