@@ -20,21 +20,21 @@ tpzBase32.encodeQuintet = function (quintet) {
 tpzBase32.normalizeToTpzBase32Alphabet = function (encodedCharacter) {
     // Add guard clauses and their tests!!!
 
-    if (encodedCharacter === '0')
+    if (encodedCharacter === "0")
     {
-        return 'o';
+        return "o";
     }
-    if (encodedCharacter === 'l' || encodedCharacter === 'L')
+    if (encodedCharacter === "l" || encodedCharacter === "L")
     {
-        return '1';
+        return "1";
     }
-    if (encodedCharacter === '2')
+    if (encodedCharacter === "2")
     {
-        return 'z';
+        return "z";
     }
-    if (encodedCharacter === 'v' || encodedCharacter === 'V')
+    if (encodedCharacter === "v" || encodedCharacter === "V")
     {
-        return 'u';
+        return "u";
     }
 
     return encodedCharacter.toLowerCase();
