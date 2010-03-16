@@ -1,5 +1,4 @@
 ﻿tpzBase32 = {
-    // Port safety test of encodingAlphabet
     encodingAlphabet: "ybndrfg8ejkmcpqxot1uwisza345h769",
     quintetMask: 31
 };
