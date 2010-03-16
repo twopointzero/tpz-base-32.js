@@ -46,10 +46,13 @@ tpzBase32.decodeToQuintet = function (encodedCharacter) {
     var normalizedEncodedCharacter = tpzBase32.normalizeToTpzBase32Alphabet(encodedCharacter);
     var index = tpzBase32.encodingAlphabet.indexOf(normalizedEncodedCharacter);
 
-    // if (index === -1)
-    // {
-        // throw new ArgumentOutOfRangeException("input");
-    // }
+    if (index === -1) {
+        throw {
+            name: "argument out of range",
+            message: "The following is not a member of the encoding alphabet: " +
+                encodedCharacter
+        };
+    }
 
     return index;
 };
@@ -71,8 +74,8 @@ tpzBase32.Integer32Converter.prototype.encode = function (input, includePadding)
         throw {
             name: "argument out of range",
             message: "The input argument must be a non-NaN 32 bit integer value."
-            };
-        }
+        };
+    }
 
     if (input === 0) {
         zero = tpzBase32.encodingAlphabet.charAt(0);
@@ -95,18 +98,13 @@ tpzBase32.Integer32Converter.prototype.encode = function (input, includePadding)
 };
 
 tpzBase32.Integer32Converter.prototype.decode = function (input) {
-    // Add guard clauses and their tests!!!
-
-    // if (input == null)
-    // {
-        // throw new ArgumentNullException("input");
-    // }
-
-    // if (input.Length == 0 || input.Length > 7)
-    // {
-        // throw new ArgumentOutOfRangeException("input", input,
-                                              // "Must be string of between 1 and 7 characters inclusive.");
-    // }
+    if (typeof input !== "string" ||
+        input.length === 0 || input.length > 7) {
+        throw {
+            name: "argument out of range",
+            message: "The input argument must be a string of between 1 and 7 (inclusive) characters within the encoding alphabet."
+        };
+    }
 
     var i;
     var result = 0;

@@ -4,27 +4,7 @@ Integer32ConverterDecodeTest = TestCase("Integer32Converter.decode test", {
         var actual = converter.decode(input);
         assertEquals(expected, actual);
     },
-    
-    // testEmptyShouldThrowArgumentOutOfRangeException()
-    // {
-        // Assert.Throws<ArgumentOutOfRangeException>(() => Int32Converter.DecodeToInt32(string.Empty));
-    // }
-    
-    // testNullShouldThrowArgumentNullException()
-    // {
-        // Assert.Throws<ArgumentNullException>(() => Int32Converter.DecodeToInt32(null));
-    // }
-    
-    // testOverlongButOtherwiseValidShouldThrowArgumentOutOfRangeException()
-    // {
-        // Assert.Throws<ArgumentOutOfRangeException>(() => Int32Converter.DecodeToInt32("yyyyyyyyyyy"));
-    // }
-    
-    // testSupportedLengthButOtherwiseInvalidShouldThrowArgumentOutOfRangeException()
-    // {
-        // Assert.Throws<ArgumentOutOfRangeException>(() => Int32Converter.DecodeToInt32("yy!yyyy"));
-    // }
-    
+
     testGiven_0L2V_ShouldDecodeTo_646736: function () {
         this.decodeAndAssertEquals("0L2V", 646736);
     },
@@ -95,5 +75,44 @@ Integer32ConverterDecodeTest = TestCase("Integer32Converter.decode test", {
     
     testGiven_yyyyyyy_ZeroShouldDecodeTo_0: function () {
         this.decodeAndAssertEquals("yyyyyyy", 0);
+    },
+    
+    decodeAndAssertException: function (input, msg, error) {
+        var converter = new tpzBase32.Integer32Converter();
+        assertException(msg, function () {
+            converter.decode(input);
+        }, error);
+    },
+
+    decodeAndAssertArgumentOutOfRangeException: function(input) {
+        this.decodeAndAssertException(
+            input,
+            "Should throw argument out of range",
+            "argument out of range"
+        );
+    },
+    
+    testGiven_undefined_ShouldThrow: function () {
+        this.decodeAndAssertArgumentOutOfRangeException(undefined);
+    },
+
+    testGiven_null_ShouldThrow: function () {
+        this.decodeAndAssertArgumentOutOfRangeException(null);
+    },
+
+    testGivenNonStringShouldThrow: function () {
+        this.decodeAndAssertArgumentOutOfRangeException(42);
+    },
+
+    testGivenIllegalCharacterShouldThrow: function () {
+        this.decodeAndAssertArgumentOutOfRangeException("!");
+    },
+
+    testGivenEmptyStringShouldThrow: function () {
+        this.decodeAndAssertArgumentOutOfRangeException("");
+    },
+
+    testGivenAboveMaxLengthShouldThrow: function () {
+        this.decodeAndAssertArgumentOutOfRangeException("yyyyyyyy");
     }
 });
