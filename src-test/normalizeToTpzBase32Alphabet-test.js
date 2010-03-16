@@ -60,5 +60,13 @@ NormalizeToTpzBase32AlphabetTest = TestCase("normalizeToTpzBase32Alphabet test",
 
     testGivenNonStringShouldThrow: function () {
         this.normalizeAndAssertArgumentOutOfRangeException(42);
+    },
+    
+    testGivenEmptyStringShouldThrow: function () {
+        this.normalizeAndAssertArgumentOutOfRangeException("");
+    },
+
+    testGivenAboveMaxLengthShouldThrow: function () {
+        this.normalizeAndAssertArgumentOutOfRangeException("yy");
     }
 });
