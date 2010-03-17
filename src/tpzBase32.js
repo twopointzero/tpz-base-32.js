@@ -42,6 +42,9 @@ tpzBase32.normalizeToTpzBase32Alphabet = function (encodedCharacter) {
 };
 
 tpzBase32.decodeToQuintet = function (encodedCharacter) {
+    var normalizedEncodedCharacter,
+        index;
+
     if (typeof encodedCharacter !== "string" ||
         encodedCharacter.length === 0 || encodedCharacter.length > 1) {
         throw {
@@ -50,8 +53,8 @@ tpzBase32.decodeToQuintet = function (encodedCharacter) {
         };
     }
 
-    var normalizedEncodedCharacter = tpzBase32.normalizeToTpzBase32Alphabet(encodedCharacter);
-    var index = tpzBase32.encodingAlphabet.indexOf(normalizedEncodedCharacter);
+    normalizedEncodedCharacter = tpzBase32.normalizeToTpzBase32Alphabet(encodedCharacter);
+    index = tpzBase32.encodingAlphabet.indexOf(normalizedEncodedCharacter);
 
     if (index === -1) {
         throw {
@@ -75,6 +78,11 @@ tpzBase32.Integer32Converter.prototype.encodeWithPadding = function (input) {
 };
 
 tpzBase32.Integer32Converter.prototype.encode = function (input, includePadding) {
+    var zero = tpzBase32.encodingAlphabet.charAt(0),
+        i,
+        result = ["!", "!", "!", "!", "!", "!", "!"],
+        quintet;
+
     if (typeof input !== "number" || isNaN(input) ||
         input < -2147483648 || input > 2147483647 ||
         input % 1 !== 0) {
@@ -85,16 +93,13 @@ tpzBase32.Integer32Converter.prototype.encode = function (input, includePadding)
     }
 
     if (input === 0) {
-        zero = tpzBase32.encodingAlphabet.charAt(0);
-        return includePadding
-            ? [zero, zero, zero, zero, zero, zero, zero].join("")
-            : zero;
+        return includePadding ?
+            [zero, zero, zero, zero, zero, zero, zero].join("") :
+            zero;
     }
 
-    var i;
-    var result = ["!", "!", "!", "!", "!", "!", "!"];
     for (i = 0; i < 7; i++) {
-        var quintet = (input >>> (5 * i)) & tpzBase32.quintetMask;
+        quintet = (input >>> (5 * i)) & tpzBase32.quintetMask;
         result[i] = tpzBase32.encodeQuintet(quintet);
         if (!includePadding && (input > 0 && input < (1 << (5 * (i + 1))))) {
             return result.slice(0, i + 1).join("");
@@ -105,6 +110,10 @@ tpzBase32.Integer32Converter.prototype.encode = function (input, includePadding)
 };
 
 tpzBase32.Integer32Converter.prototype.decode = function (input) {
+    var i,
+        result = 0,
+        quintet;
+
     if (typeof input !== "string" ||
         input.length === 0 || input.length > 7) {
         throw {
@@ -113,10 +122,8 @@ tpzBase32.Integer32Converter.prototype.decode = function (input) {
         };
     }
 
-    var i;
-    var result = 0;
     for (i = 0; i < input.length; i++) {
-        var quintet = tpzBase32.decodeToQuintet(input.charAt(i));
+        quintet = tpzBase32.decodeToQuintet(input.charAt(i));
         result |= quintet << (5 * i);
     }
     return result;
