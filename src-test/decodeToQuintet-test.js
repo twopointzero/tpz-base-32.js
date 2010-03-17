@@ -1,4 +1,6 @@
 DecodeToQuintetTest = TestCase("decodeToQuintet test", {
+    encodingAlphabet: "ybndrfg8ejkmcpqxot1uwisza345h769",
+
     decodeAndAssertException: function (input, msg, error) {
         assertException(msg, function () {
             tpzBase32.decodeToQuintet(input);
@@ -14,7 +16,7 @@ DecodeToQuintetTest = TestCase("decodeToQuintet test", {
     },
 
     testGivenACharacterInTheEncodingShouldReturnTheExpectedValue: function () {
-        var values = "ybndrfg8ejkmcpqxot1uwisza345h769";
+        var values = this.encodingAlphabet;
         var i;
         for (i = 0; i < values.Length; i++) {
             var input = values[i];

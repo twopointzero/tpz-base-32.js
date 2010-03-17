@@ -1,4 +1,6 @@
 EncodeQuintetTest = TestCase("encodeQuintet test", {
+    encodingAlphabet: "ybndrfg8ejkmcpqxot1uwisza345h769",
+
     encodeQuintetAndAssertException: function (input, msg, error) {
         assertException(msg, function () {
             tpzBase32.encodeQuintet(input);
@@ -21,7 +23,7 @@ EncodeQuintetTest = TestCase("encodeQuintet test", {
     },
 
     testGivenAnyLegalValueShouldProduceTheExpectedResult: function () {
-        var values = "ybndrfg8ejkmcpqxot1uwisza345h769";
+        var values = this.encodingAlphabet;
         var i;
         for (i = 0; i < values.Length; i++) {
             var expected = values.charAt(i);
